@@ -3,7 +3,7 @@ pub use starknet::{ContractAddress, ClassHash};
 #[starknet::interface]
 pub trait ICounterFactory<TContractState> {
     fn get_init_argument(self: @TContractState) -> Span<felt252>;
-    fn get_contracts(self: @TContractState) -> Span<felt252>;
+    // fn get_contracts(self: @TContractState) -> Span<felt252>;
 
     /// Create a new counter contract from stored arguments
     fn create_flat(ref self: TContractState) -> ContractAddress;
@@ -55,7 +55,7 @@ pub mod FlatFactory {
                 self.counter_class_hash.read(), 0, constructor_calldata, false
             )
                 .unwrap_syscall();
-            self.contracts_created.append(deployed_address);
+            // self.contracts_created.append(deployed_address);
             // self.contracts_created.write(self.contract_id.read(), deployed_address);
             self.contract_id.write(self.contract_id.read() + 1);
 
@@ -77,9 +77,8 @@ pub mod FlatFactory {
         fn get_init_argument(self: @ContractState) -> Span<felt252> {
             self.init_argument.read()
         }
-
-        fn get_contracts(self: @TContractState) -> Span<felt252> {
-            self.contracts_created.read()
-        }
+    // fn get_contracts(self: @TContractState) -> Span<felt252> {
+    //     // self.contracts_created.read()
+    // }
     }
 }
