@@ -23,7 +23,6 @@ mod Flat {
 
     #[storage]
     struct Storage {
-        owner: ContractAddress,
         image: Span<felt252>,
         door_open: bool,
         #[substorage(v0)]
@@ -32,7 +31,6 @@ mod Flat {
 
     #[constructor]
     fn constructor(ref self: ContractState, image: Span<felt252>, initial_owner: ContractAddress) {
-        self.owner.write(get_caller_address());
         self.image.write(image);
         self.ownable.initializer(initial_owner);
         self.door_open.write(false);
@@ -69,7 +67,7 @@ mod Flat {
         fn withdraw(ref self: ContractState, amount: u256, contract_address: ContractAddress) {
             self.ownable.assert_only_owner();
             let dispatcher = ERC20ABIDispatcher { contract_address };
-            let owner = self.owner();
+            let owner = self.ownable.owner();
             dispatcher.approve(owner, amount);
             dispatcher.transfer(owner, amount);
         }
