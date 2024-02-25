@@ -2,6 +2,7 @@ mod example_contracts {
     mod counter;
     mod counter_factory;
     mod flat;
+    mod flat_factory;
 }
 // mod vault {
 //     mod fraction_vault_factory;
