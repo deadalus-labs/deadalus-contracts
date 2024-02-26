@@ -68,7 +68,6 @@ mod Flat {
             self.ownable.assert_only_owner();
             let dispatcher = ERC20ABIDispatcher { contract_address };
             let owner = self.ownable.owner();
-            dispatcher.approve(owner, amount);
             dispatcher.transfer(owner, amount);
         }
     }
